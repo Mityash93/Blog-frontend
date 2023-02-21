@@ -1,15 +1,19 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, selectIsAuth } from "../../store/slices/auth";
 
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
 
-import s from './Header.module.scss';
+import s from "./Header.module.scss";
 
 export const Header = () => {
-  const isAuth = true;
-
-  const onClickLogout = () => {};
+  const isAuth = useSelector(selectIsAuth);
+  const dispatch = useDispatch();
+  const onClickLogout = () => {
+    dispatch(logout());
+  };
 
   return (
     <div className={s.root}>
@@ -24,7 +28,11 @@ export const Header = () => {
                 <Link to="/posts/create">
                   <Button variant="contained">Написать статью</Button>
                 </Link>
-                <Button onClick={onClickLogout} variant="contained" color="error">
+                <Button
+                  onClick={onClickLogout}
+                  variant="contained"
+                  color="error"
+                >
                   Выйти
                 </Button>
               </>

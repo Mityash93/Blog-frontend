@@ -7,16 +7,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { CommentsBlock } from "../components/CommentsBlock";
 import { Post } from "../components/Post";
 import { TagsBlock } from "../components/TagsBlock";
-import { fetchPosts } from "../store/slices/posts";
+import { fetchPosts, fetchTags } from "../store/slices/posts";
 
 export const Home = () => {
   const dispatch = useDispatch();
   const { posts, tags } = useSelector((state) => state.posts);
 
   const isLoadingPosts = posts.status === "Loading";
+  const isLoadingTags = tags.status === "Loading";
 
   useEffect(() => {
     dispatch(fetchPosts());
+    dispatch(fetchTags());
   }, []);
   return (
     <>
@@ -37,7 +39,8 @@ export const Home = () => {
               <Post
                 id={obj._id}
                 title={obj.title}
-                imageUrl="https://res.cloudinary.com/practicaldev/image/fetch/s--UnAfrEG8--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/icohm5g0axh9wjmu4oc3.png"
+                imageUrl={obj.imageUrl}
+                // imageUrl="https://res.cloudinary.com/practicaldev/image/fetch/s--UnAfrEG8--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/icohm5g0axh9wjmu4oc3.png"
                 user={obj.user}
                 createdAt={obj.createdAt}
                 viewsCount={obj.viewsCount}
@@ -50,8 +53,8 @@ export const Home = () => {
         </Grid>
         <Grid xs={4} item>
           <TagsBlock
-            items={["react", "typescript", "заметки"]}
-            isLoading={false}
+            items={tags.items}
+            isLoading={isLoadingTags}
           />
           <CommentsBlock
             items={[

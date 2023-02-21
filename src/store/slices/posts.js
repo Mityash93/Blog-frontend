@@ -38,6 +38,18 @@ export const postsReducer = createSlice({
       .addCase(fetchPosts.rejected, (state) => {
         state.posts.items = [];
         state.posts.status = "error";
+      })
+      .addCase(fetchTags.pending, (state) => {
+        state.tags.items = [];
+        state.tags.status = "loading";
+      })
+      .addCase(fetchTags.fulfilled, (state, action) => {
+        state.tags.items = action.payload;
+        state.tags.status = "success";
+      })
+      .addCase(fetchTags.rejected, (state) => {
+        state.tags.items = [];
+        state.tags.status = "error";
       });
   },
 });

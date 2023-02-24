@@ -13,6 +13,7 @@ export const Header = () => {
   const dispatch = useDispatch();
   const onClickLogout = () => {
     dispatch(logout());
+    window.localStorage.removeItem("token")
   };
 
   return (

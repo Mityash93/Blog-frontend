@@ -12,6 +12,7 @@ import { fetchPosts, fetchTags } from "../store/slices/posts";
 export const Home = () => {
   const dispatch = useDispatch();
   const { posts, tags } = useSelector((state) => state.posts);
+  const userData = useSelector((state) => state.auth.data);
 
   const isLoadingPosts = posts.status === "Loading";
   const isLoadingTags = tags.status === "Loading";
@@ -46,16 +47,13 @@ export const Home = () => {
                 viewsCount={obj.viewsCount}
                 commentsCount={3}
                 tags={obj.tags}
-                isEditable
+                isEditable={userData?._id === obj.user._id}
               />
             )
           )}
         </Grid>
         <Grid xs={4} item>
-          <TagsBlock
-            items={tags.items}
-            isLoading={isLoadingTags}
-          />
+          <TagsBlock items={tags.items} isLoading={isLoadingTags} />
           <CommentsBlock
             items={[
               {

@@ -5,16 +5,17 @@ import Button from "@mui/material/Button";
 import SimpleMDE from "react-simplemde-editor";
 import { useSelector } from "react-redux";
 import { selectIsAuth } from "../../store/slices/auth";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import axios from "../../axios";
 
 import "easymde/dist/easymde.min.css";
 import styles from "./AddPost.module.scss";
 
 export const AddPost = () => {
+  const navigate = useNavigate();
   const isAuth = useSelector(selectIsAuth);
-  const [isLoading, setIsLoading] = useState(false)
-  const [value, setValue] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [text, setText] = useState("");
   const [title, setTitle] = useState("");
   const [tags, setTags] = useState("");
   const [imageUrl, setImageUrl] = useState("");
@@ -26,7 +27,7 @@ export const AddPost = () => {
       const file = e.target.files[0];
       formData.append("image", file);
       const { data } = await axios.post("/upload", formData);
-      setImageUrl(data.url)
+      setImageUrl(data.url);
     } catch (error) {
       console.warn(error);
       alert("Произошла ошибка при загрузке файла");
@@ -34,12 +35,33 @@ export const AddPost = () => {
   };
 
   const onClickRemoveImage = () => {
-    setImageUrl("")
+    setImageUrl("");
   };
 
   const onChange = React.useCallback((value) => {
-    setValue(value);
+    setText(value);
   }, []);
+
+  const onSubmit = async () => {
+    try {
+      setIsLoading(true);
+
+      const fields = {
+        title,
+        text,
+        imageUrl,
+        tags,
+      };
+
+      const { data } = await axios.post("/posts", fields);
+
+      const id = data._id;
+      navigate(`/posts/${id}`);
+    } catch (error) {
+      console.warn(error);
+      alert("Произошла ошибка при создании статьи");
+    }
+  };
 
   const options = React.useMemo(
     () => ({
@@ -113,12 +135,12 @@ export const AddPost = () => {
       />
       <SimpleMDE
         className={styles.editor}
-        value={value}
+        value={text}
         onChange={onChange}
         options={options}
       />
       <div className={styles.buttons}>
-        <Button size="large" variant="contained">
+        <Button onClick={onSubmit} size="large" variant="contained">
           Опубликовать
         </Button>
         <a href="/">

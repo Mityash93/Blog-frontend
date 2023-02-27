@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import SimpleMDE from "react-simplemde-editor";
+
 import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
-import SimpleMDE from "react-simplemde-editor";
-import { useSelector } from "react-redux";
-import { selectIsAuth } from "../../store/slices/auth";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+
+import { selectIsAuth } from "../../store/slices/Auth/auth";
 import axios from "../../axios";
 
 import "easymde/dist/easymde.min.css";

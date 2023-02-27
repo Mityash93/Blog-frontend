@@ -1,13 +1,15 @@
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import Grid from "@mui/material/Grid";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+
 
 import { CommentsBlock } from "../components/CommentsBlock";
 import { Post } from "../components/Post";
 import { TagsBlock } from "../components/TagsBlock";
-import { fetchPosts, fetchTags } from "../store/slices/posts";
+import { fetchPosts, fetchTags } from "../store/slices/Posts/listApi";
 
 export const Home = () => {
   const dispatch = useDispatch();
@@ -28,7 +30,7 @@ export const Home = () => {
         value={0}
         aria-label="basic tabs example"
       >
-        <Tab label="Новые" />
+        <Tab label="Статьи" />
         {/* <Tab label="Популярные" /> */}
       </Tabs>
       <Grid container spacing={4}>

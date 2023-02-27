@@ -1,19 +1,19 @@
+import clsx from "clsx";
 import React from "react";
 import { Link } from "react-router-dom";
-import clsx from "clsx";
-import IconButton from "@mui/material/IconButton";
+import { useDispatch } from "react-redux";
+
+import CommentIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import DeleteIcon from "@mui/icons-material/Clear";
 import EditIcon from "@mui/icons-material/Edit";
 import EyeIcon from "@mui/icons-material/RemoveRedEyeOutlined";
-import CommentIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
-import axios from "../../axios";
+import IconButton from "@mui/material/IconButton";
 
 import { UserInfo } from "../UserInfo";
 import { PostSkeleton } from "./Skeleton";
+import { fetchRemovePost } from "../../store/slices/Posts/listApi";
 
 import s from "./Post.module.scss";
-import { useDispatch } from "react-redux";
-import { fetchRemovePost } from "../../store/slices/posts";
 
 export const Post = ({
   id,

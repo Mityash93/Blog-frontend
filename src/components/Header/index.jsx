@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { logout, selectIsAuth } from "../../store/slices/auth";
+
+import { logout } from "../../store/slices/Auth/auth";
+import { selectIsAuth } from "../../store/slices/Auth/auth";
 
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
